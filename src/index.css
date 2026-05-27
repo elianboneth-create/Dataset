@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-brand-beige: #E2E8F0;
+  --color-brand-gold: #10B981;
+  --color-charcoal-light: #1A1A1D;
+  --color-charcoal-medium: #141416;
+  --color-charcoal-dark: #0A0A0B;
+}
+
+/* Custom smooth dark mode styling scrollbars and default background */
+body {
+  background-color: var(--color-charcoal-dark);
+  color: #E2E8F0;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* Scrollbar styles to match high-end dark layout */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-charcoal-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: #2D3135;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand-gold);
+}
+
+.premium-glass {
+  background: rgba(20, 20, 22, 0.75);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.premium-border-glow {
+  transition: all 0.3s ease;
+}
+.premium-border-glow:focus-within {
+  border-color: var(--color-brand-gold);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.15);
+}

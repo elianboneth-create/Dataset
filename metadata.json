@@ -1,0 +1,8 @@
+{
+  "name": "Valoración Inmobiliaria Premium",
+  "description": "Herramienta PropTech de alta gama para valoración de viviendas basada en análisis de regresión lineal múltiple con analítica de negocio y captación de leads.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
