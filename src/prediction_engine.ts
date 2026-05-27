@@ -6,20 +6,20 @@
 import { ValuationInputs, ModelCoefficients, ValuationResult } from "./types";
 
 export const COEFFICIENTS: ModelCoefficients = {
-  intercept: -149472.84,
-  coef_area: 247.17,
-  coef_bathrooms: 1024077.94,
-  coef_stories: 486503.39,
-  coef_parking: 283577.52,
-  coef_airconditioning: 863270.43,
-  coef_mainroad: 393735.49,
-  coef_guestroom: 295836.20,
-  coef_basement: 374040.80,
-  coef_hotwaterheating: 861783.03,
-  coef_prefarea: 655385.53,
+  intercept: -149472.84297652676,
+  coef_area: 247.17287517218935,
+  coef_bathrooms: 1024077.9448582154,
+  coef_stories: 486503.38925918296,
+  coef_parking: 283577.5241175011,
+  coef_airconditioning: 863270.4287537151,
+  coef_mainroad: 393735.4854983891,
+  coef_guestroom: 295836.19574025273,
+  coef_basement: 374040.80322871216,
+  coef_hotwaterheating: 861783.0283230968,
+  coef_prefarea: 655385.5256900185,
   furnishing_unfurnished: 0,
-  furnishing_semi_furnished: 373890.67,
-  furnishing_furnished: 417991.06,
+  furnishing_semi_furnished: 373890.6659332677,
+  furnishing_furnished: 417991.05725576676,
 };
 
 export function calculateValuation(inputs: ValuationInputs): ValuationResult {

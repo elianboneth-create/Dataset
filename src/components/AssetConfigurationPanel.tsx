@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ValuationInputs } from "../types";
 import { Sliders, CheckSquare, Layers, Sparkles, Building, MapPin, Eye, Car, Bath, Maximize2 } from "lucide-react";
 
@@ -18,10 +18,63 @@ export default function AssetConfigurationPanel({
 }: AssetConfigurationPanelProps) {
   const [activeTab, setActiveTab] = useState<"structure" | "amenities">("structure");
 
+  // Local text input states so the user can easily clear/type without standard React jump-stutters
+  const [inputsText, setInputsText] = useState({
+    area: inputs.area.toString(),
+    bathrooms: inputs.bathrooms.toString(),
+    stories: inputs.stories.toString(),
+    parking: inputs.parking.toString(),
+  });
+
+  // Keep the native state synced with any slider adjustments or preset changes
+  useEffect(() => {
+    setInputsText({
+      area: inputs.area.toString(),
+      bathrooms: inputs.bathrooms.toString(),
+      stories: inputs.stories.toString(),
+      parking: inputs.parking.toString(),
+    });
+  }, [inputs.area, inputs.bathrooms, inputs.stories, inputs.parking]);
+
   const handleChange = <K extends keyof ValuationInputs>(key: K, value: ValuationInputs[K]) => {
     setInputs((prev) => ({
       ...prev,
       [key]: value,
+    }));
+  };
+
+  const handleTextChange = (key: "area" | "bathrooms" | "stories" | "parking", valueStr: string) => {
+    // Only permit digits (only positive integers)
+    const cleaned = valueStr.replace(/[^0-9]/g, "");
+    setInputsText((prev) => ({
+      ...prev,
+      [key]: cleaned,
+    }));
+
+    if (cleaned !== "") {
+      const num = Number(cleaned);
+      setInputs((prev) => ({
+        ...prev,
+        [key]: num,
+      }));
+    }
+  };
+
+  const handleTextBlur = (key: "area" | "bathrooms" | "stories" | "parking", min: number, max: number) => {
+    let num = Number(inputsText[key]);
+    if (isNaN(num) || inputsText[key] === "") {
+      num = min;
+    }
+    if (num < min) num = min;
+    if (num > max) num = max;
+
+    setInputsText((prev) => ({
+      ...prev,
+      [key]: String(num),
+    }));
+    setInputs((prev) => ({
+      ...prev,
+      [key]: num,
     }));
   };
 
@@ -67,9 +120,17 @@ export default function AssetConfigurationPanel({
                 <Maximize2 className="w-3.5 h-3.5 text-brand-gold" />
                 Área del Terreno (m²)
               </label>
-              <span className="text-sm font-semibold text-brand-gold font-display font-bold">
-                {inputs.area.toLocaleString()} m²
-              </span>
+              <div className="flex items-center gap-1.5 bg-white/[0.03] px-2.5 py-1 rounded-md border border-white/5 focus-within:border-brand-gold/50 focus-within:ring-1 focus-within:ring-brand-gold/30 transition-all">
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={inputsText.area}
+                  onChange={(e) => handleTextChange("area", e.target.value)}
+                  onBlur={() => handleTextBlur("area", 1650, 16200)}
+                  className="bg-transparent text-sm font-semibold text-brand-gold font-display text-right w-16 outline-none border-none p-0 focus:ring-0"
+                />
+                <span className="text-xs text-brand-gold font-semibold uppercase tracking-wider">m²</span>
+              </div>
             </div>
             <input
               type="range"
@@ -94,9 +155,19 @@ export default function AssetConfigurationPanel({
                 <Bath className="w-3.5 h-3.5 text-brand-gold" />
                 Baños Completos
               </label>
-              <span className="text-sm font-semibold text-brand-gold font-display font-bold bg-white/[0.03] px-3 py-1 rounded-md border border-white/5">
-                {inputs.bathrooms} {inputs.bathrooms === 1 ? "Baño" : "Baños"}
-              </span>
+              <div className="flex items-center gap-1.5 bg-white/[0.03] px-2.5 py-1 rounded-md border border-white/5 focus-within:border-brand-gold/50 focus-within:ring-1 focus-within:ring-brand-gold/30 transition-all">
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={inputsText.bathrooms}
+                  onChange={(e) => handleTextChange("bathrooms", e.target.value)}
+                  onBlur={() => handleTextBlur("bathrooms", 1, 4)}
+                  className="bg-transparent text-sm font-semibold text-brand-gold font-display text-right w-8 outline-none border-none p-0 focus:ring-0"
+                />
+                <span className="text-xs text-brand-gold font-semibold uppercase tracking-wider">
+                  {inputs.bathrooms === 1 ? "Baño" : "Baños"}
+                </span>
+              </div>
             </div>
             <input
               type="range"
@@ -121,9 +192,19 @@ export default function AssetConfigurationPanel({
                 <Layers className="w-3.5 h-3.5 text-brand-gold" />
                 Pisos / Plantas totales
               </label>
-              <span className="text-sm font-semibold text-brand-gold font-display font-bold bg-white/[0.03] px-3 py-1 rounded-md border border-white/5">
-                {inputs.stories} {inputs.stories === 1 ? "Planta" : "Plantas"}
-              </span>
+              <div className="flex items-center gap-1.5 bg-white/[0.03] px-2.5 py-1 rounded-md border border-white/5 focus-within:border-brand-gold/50 focus-within:ring-1 focus-within:ring-brand-gold/30 transition-all">
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={inputsText.stories}
+                  onChange={(e) => handleTextChange("stories", e.target.value)}
+                  onBlur={() => handleTextBlur("stories", 1, 4)}
+                  className="bg-transparent text-sm font-semibold text-brand-gold font-display text-right w-8 outline-none border-none p-0 focus:ring-0"
+                />
+                <span className="text-xs text-brand-gold font-semibold uppercase tracking-wider">
+                  {inputs.stories === 1 ? "Planta" : "Plantas"}
+                </span>
+              </div>
             </div>
             <input
               type="range"
@@ -148,9 +229,19 @@ export default function AssetConfigurationPanel({
                 <Car className="w-3.5 h-3.5 text-brand-gold" />
                 Plazas de Estacionamiento
               </label>
-              <span className="text-sm font-semibold text-brand-gold font-display font-bold bg-white/[0.03] px-3 py-1 rounded-md border border-white/5">
-                {inputs.parking === 0 ? "Sin Cochera" : `${inputs.parking} Garaje(s)`}
-              </span>
+              <div className="flex items-center gap-1.5 bg-white/[0.03] px-2.5 py-1 rounded-md border border-white/5 focus-within:border-brand-gold/50 focus-within:ring-1 focus-within:ring-brand-gold/30 transition-all">
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={inputsText.parking}
+                  onChange={(e) => handleTextChange("parking", e.target.value)}
+                  onBlur={() => handleTextBlur("parking", 0, 3)}
+                  className="bg-transparent text-sm font-semibold text-brand-gold font-display text-right w-8 outline-none border-none p-0 focus:ring-0"
+                />
+                <span className="text-xs text-brand-gold font-semibold uppercase tracking-wider">
+                  {inputs.parking === 1 ? "Garaje" : "Garajes"}
+                </span>
+              </div>
             </div>
             <input
               type="range"
