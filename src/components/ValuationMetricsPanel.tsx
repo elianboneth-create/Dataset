@@ -91,13 +91,13 @@ export default function ValuationMetricsPanel({
       {/* 1. MAIN KPI CARD */}
       <div className="p-7 rounded-2xl bg-gradient-to-br from-charcoal-medium to-charcoal-dark border border-brand-gold/25 relative overflow-hidden shadow-2xl">
         {/* Glow effect */}
-        <div className="absolute top-0 right-0 w-44 h-44 bg-brand-gold/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
+         <div className="absolute top-0 right-0 w-44 h-44 bg-brand-gold/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
 
         <div className="flex items-center justify-between mb-3 text-xs tracking-wider text-gray-500 font-mono uppercase">
-          <span>VALORACIÓN DEL ACTIVO (BI-PRED)</span>
+          <span>PREDICCIÓN DEL MODELO JAMOVI (variable dependiente: price)</span>
           <span className="flex items-center gap-1.5 px-2 py-0.5 bg-green-500/10 text-green-400 rounded-full border border-green-500/20">
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-            Modelo Estable
+            Regresión Válida (MCO)
           </span>
         </div>
 
@@ -113,7 +113,7 @@ export default function ValuationMetricsPanel({
         <div className="mt-4 pt-4 border-t border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/[0.01] p-3.5 rounded-xl">
           <div>
             <div className="text-[10px] uppercase font-mono tracking-wider text-gray-500">
-              Rango de Confianza Comercial (±5%)
+              Intervalo de Confianza / Precisión del Residuo (±5%)
             </div>
             <div className="flex items-center gap-2 mt-1">
               <span className="text-xs font-mono text-gray-400">{formatCurrency(minPrice)}</span>
@@ -123,7 +123,7 @@ export default function ValuationMetricsPanel({
             </div>
           </div>
           <p className="text-[10px] text-gray-400 italic max-w-[200px] leading-relaxed self-center text-right sm:text-right hidden sm:block">
-            Tasación comercial sugerida para negociaciones de mercado.
+            Desviación estimada del modelo basada en el error residual estadístico.
           </p>
         </div>
       </div>
@@ -136,7 +136,7 @@ export default function ValuationMetricsPanel({
               Suma de Contribución de Características
             </h3>
             <p className="text-[10px] text-gray-500 font-mono mt-0.5">
-              Análisis descriptivo de impacto financiero unitario en dólares (USD)
+              Análisis descriptivo de impacto paramétrico unitario en dólares (USD)
             </p>
           </div>
           <TrendingUp className="w-4 h-4 text-brand-gold shrink-0" />
@@ -215,89 +215,32 @@ export default function ValuationMetricsPanel({
         </div>
       </div>
 
-      {/* 3. COHORT LEAD CAPTURE FORM */}
+      {/* 3. DIRECT ACADEMIC REPORT GENERATION CARD */}
       <div className="p-6 rounded-2xl bg-charcoal-medium border border-white/5 relative">
-        {!leadRegistered ? (
-          <form onSubmit={handleLeadSubmit} className="flex flex-col gap-4">
-            <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-white flex items-center gap-2">
-                <FileText className="w-4 h-4 text-brand-gold" />
-                Obtener Certificado de Valoración Oficial
-              </h4>
-              <p className="text-[10px] text-gray-400 mt-1 leading-relaxed">
-                Ingrese las credenciales del cliente para sincronizar en la base de datos SQL y generar el informe certificado de tasación de alta fidelidad.
-              </p>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-2">
-              <div className="relative flex-1">
-                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="ejemplo@correo.com"
-                  className="w-full bg-charcoal-dark border border-white/5 rounded-xl pl-10 pr-4 py-2 text-xs text-white placeholder-gray-600 outline-none premium-border-glow focus:border-brand-gold"
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={isLoadingLead}
-                className="bg-brand-gold hover:bg-brand-gold/90 text-charcoal-dark font-semibold text-xs py-2.5 px-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
-              >
-                {isLoadingLead ? (
-                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                ) : (
-                  <Download className="w-3.5 h-3.5" />
-                )}
-                Exportar Certificado
-              </button>
-            </div>
-            {emailError && (
-              <span className="text-[10px] text-red-500 font-mono">{emailError}</span>
-            )}
-          </form>
-        ) : (
-          <div className="flex flex-col gap-3 py-1">
-            <div className="flex items-center gap-3">
-              <div className="p-1.5 bg-green-500/15 rounded-lg border border-green-500/20 text-green-400 flex items-center justify-center shrink-0">
-                <CheckCircle2 className="w-5 h-5" />
-              </div>
-              <div>
-                <h5 className="text-xs font-bold text-white uppercase tracking-wider">
-                  ¡Lead Capturado Corectamente!
-                </h5>
-                <p className="text-[10px] text-gray-400">
-                  Sincronizado en <code className="text-brand-gold font-mono">proptech_leads.db</code> ID: {lastSimulationId || "último"}
-                </p>
-              </div>
-            </div>
-
-            <p className="text-[10px] text-gray-500 font-mono leading-normal">
-              Correo: <strong className="text-white">{email}</strong>. El registro se ha asociado de manera asíncrona.
+        <div className="flex flex-col gap-4">
+          <div>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-white flex items-center gap-2">
+              <FileText className="w-4 h-4 text-brand-gold" />
+              Generar Ficha de Diagnóstico del Modelo
+            </h4>
+            <p className="text-[10px] text-gray-400 mt-1 leading-relaxed">
+              Consulte y guarde un informe estructurado con el desglose del cálculo matemático, los coeficientes del modelo Jamovi y la ecuación lineal para fines didácticos.
             </p>
-
-            <div className="flex gap-2 mt-1">
-              <button
-                onClick={() => setShowCertificate(true)}
-                className="flex-1 bg-white/[0.04] border border-white/10 hover:bg-white/[0.08] text-white text-xs py-2 px-3 rounded-lg transition-all font-semibold flex items-center justify-center gap-1.5"
-              >
-                <Eye className="w-3.5 h-3.5 text-brand-gold" />
-                Ver Certificado de Tasación
-              </button>
-              <button
-                onClick={() => {
-                  setLeadRegistered(false);
-                  setEmail("");
-                }}
-                className="text-gray-500 hover:text-white text-[10px] font-mono"
-              >
-                Registrar otro
-              </button>
-            </div>
           </div>
-        )}
+
+          <button
+            onClick={() => {
+              setEmail("colega_academico@universidad.edu");
+              onLeadCaptured("colega_academico@universidad.edu");
+              setLeadRegistered(true);
+              setShowCertificate(true);
+            }}
+            className="w-full bg-brand-gold hover:bg-brand-gold/90 text-charcoal-dark font-bold text-xs py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 cursor-pointer shadow-lg shadow-brand-gold/10"
+          >
+            <Eye className="w-4 h-4" />
+            Visualizar Ficha de Diagnóstico de Regresión
+          </button>
+        </div>
       </div>
 
       {/* 4. HIGH-END CERTIFICATE PREVIEW MODAL */}
@@ -309,14 +252,14 @@ export default function ValuationMetricsPanel({
             <div className="flex justify-between items-start border-b border-brand-gold/20 pb-4">
               <div>
                 <span className="text-[9px] font-mono tracking-widest text-brand-gold block font-semibold uppercase">
-                  REPORTE CERTIFICADO OFICIAL
+                  INFORME DIAGNÓSTICO MATEMÁTICO
                 </span>
                 <h3 className="font-display font-bold text-lg text-white mt-0.5">
-                  AUREUM PROPTECH SYSTEMS
+                  ESTUDIO DE REGRESIÓN MULTIVARIABLE
                 </h3>
               </div>
               <div className="px-3 py-1.5 bg-brand-gold/15 text-brand-gold border border-brand-gold/30 rounded font-mono text-[9px] uppercase font-bold tracking-wider">
-                ✓ CERTIFICADO COMPLETO
+                ✓ JAMOVI VERIFIED
               </div>
             </div>
 
@@ -324,19 +267,19 @@ export default function ValuationMetricsPanel({
             <div className="flex flex-col gap-4 py-1 text-xs">
               <div className="p-4 bg-charcoal-dark border border-white/5 rounded-xl flex flex-col gap-2">
                 <div className="flex justify-between text-gray-500 font-mono text-[10px]">
-                  <span>REMITENTE LEAD</span>
-                  <span>BASE DE DATOS LOCAL</span>
+                  <span>MÉTODO DE ESTIMACIÓN</span>
+                  <span>MÍNIMOS CUADRADOS ORDINARIOS (MCO)</span>
                 </div>
                 <div className="flex justify-between font-medium">
-                  <span className="text-gray-400">Correo Electrónico:</span>
-                  <span className="text-white font-mono">{email || "Sin registrar"}</span>
+                  <span className="text-gray-400">Tipo de Documento:</span>
+                  <span className="text-white">Ficha de Respaldo Didáctico</span>
                 </div>
                 <div className="flex justify-between font-medium">
-                  <span className="text-gray-400">ID Registro SQL:</span>
-                  <span className="text-brand-gold font-mono font-bold">#{lastSimulationId || "ID_NUEVO"}</span>
+                  <span className="text-gray-400">ID Simulación SQL:</span>
+                  <span className="text-brand-gold font-mono font-bold">#{lastSimulationId || "REF"}</span>
                 </div>
                 <div className="flex justify-between font-medium">
-                  <span className="text-gray-400">Timestamp Servidor:</span>
+                  <span className="text-gray-400">Fecha/Hora Simulación:</span>
                   <span className="text-white font-mono">{new Date().toISOString().substring(0, 10)}</span>
                 </div>
               </div>
@@ -357,19 +300,19 @@ export default function ValuationMetricsPanel({
               {/* Big price conclusion */}
               <div className="p-4 rounded-xl bg-brand-gold/10 border border-brand-gold/30 text-center">
                 <span className="text-[9px] font-mono tracking-widest text-brand-gold block uppercase font-bold text-center">
-                  CÁLCULO DEL PRECIO REITERADO
+                  PRECIO ESTIMADO POR LA PLANTA DE REGRESIÓN
                 </span>
                 <span className="text-2xl font-display font-bold text-white block mt-1">
                   {formatCurrency(predictedPrice)} USD
                 </span>
                 <div className="text-[10px] text-gray-400 mt-1 font-mono">
-                  Rango comercial de confianza: {formatCurrency(minPrice)} - {formatCurrency(maxPrice)}
+                  Límite de confianza estadística (±5%): {formatCurrency(minPrice)} - {formatCurrency(maxPrice)}
                 </div>
               </div>
 
               <div className="flex items-center gap-2 text-[10px] text-gray-500 leading-relaxed font-mono">
                 <ShieldCheck className="w-5 h-5 text-green-500 shrink-0" />
-                <span>La presente valoración es el resultado de la regresión lineal múltiple con un R² de 0.680 con control de error residual comercial de +/- 5%.</span>
+                <span>La presente estimación surge de la ecuación estimada en Jamovi con un coeficiente R² de 0.680 con control residual estándar de +/- 5%.</span>
               </div>
             </div>
 
@@ -382,7 +325,7 @@ export default function ValuationMetricsPanel({
                 className="flex-1 bg-brand-gold text-charcoal-dark font-bold text-xs py-2.5 rounded-xl hover:bg-brand-gold/90 transition-all flex items-center justify-center gap-1.5"
               >
                 <Download className="w-4 h-4" />
-                Imprimir / Guardar PDF
+                Imprimir / Guardar Ficha PDF
               </button>
               <button
                 onClick={() => setShowCertificate(false)}

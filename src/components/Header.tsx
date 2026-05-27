@@ -30,14 +30,14 @@ export default function Header({
           <div>
             <div className="flex items-center gap-2">
               <span className="font-display text-lg tracking-wider font-semibold text-white uppercase">
-                PROPVAL <span className="text-brand-gold font-bold">ARCHITECT</span>
+                SIMULADOR <span className="text-brand-gold font-bold">REGRESIÓN</span>
               </span>
               <span className="px-2 py-0.5 text-[9px] bg-brand-gold/15 text-brand-gold font-mono rounded font-medium border border-brand-gold/10 uppercase">
-                MVP v1.1
+                ESTADÍSTICA v1.1
               </span>
             </div>
             <p className="text-[11px] text-gray-500 font-mono tracking-normal">
-              ADVANCED PROPTECH VALUATION ENGINE • REAL-TIME REGRESSION ANALYSIS
+              EXPLICACIÓN DEL MODELO MULTIVARIADO • INTERACCIÓN DE REGRESIÓN EN VIVO
             </p>
           </div>
         </div>
@@ -64,7 +64,7 @@ export default function Header({
             }`}
           >
             <Database className="w-4.5 h-4.5 stroke-[1.8]" />
-            Analítica de Demanda & Leads
+            Estadísticas Descriptivas (Jamovi)
             {totalSimulations > 0 && (
               <span className="absolute -top-1 -right-1 flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-gold opacity-75"></span>
@@ -78,11 +78,7 @@ export default function Header({
         <div className="hidden lg:flex items-center gap-5 text-xs font-mono">
           <div className="flex items-center gap-2 text-gray-400 px-3 py-1.5 bg-white/[0.02] rounded-lg border border-white/5">
             <Activity className="w-3.5 h-3.5 text-green-500 animate-pulse" />
-            <span>Consultas en vivo: <strong className="text-white">{totalSimulations}</strong></span>
-          </div>
-          <div className="flex items-center gap-2 text-gray-400 px-3 py-1.5 bg-white/[0.02] rounded-lg border border-white/5">
-            <span className="w-1.5 h-1.5 bg-brand-gold rounded-full"></span>
-            <span>Leads Capturados: <strong className="text-white">{totalLeads}</strong></span>
+            <span>Consultas Registradas (SQL): <strong className="text-white">{totalSimulations}</strong></span>
           </div>
         </div>
       </div>
